@@ -296,7 +296,7 @@
           services. Reach out to us anytime through your preferred communication
           channel.
         </p>
-        <form action="/action_page.php" target="_blank">
+        <form id="contactForm" onsubmit="sendEmail(); return false;">
           <div class="w3-section">
             <label>Name</label>
             <input
@@ -360,6 +360,31 @@
         document.getElementById("modal01").style.display = "block";
         var captionText = document.getElementById("caption");
         captionText.innerHTML = element.alt;
+      }
+    </script>
+
+    <script>
+      function sendEmail() {
+        const form = document.getElementById("contactForm");
+        const formData = new FormData(form);
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const message = formData.get("message");
+
+        fetch(
+          "https://script.google.com/macros/s/AKfycbxGdy5jOsVJFzS-CxgBzRmZtF32F0JqVArbfM06zT7gLiEi0AJ1Zb1YWoefybgzb6wX/exec",
+          {
+            method: "POST",
+            body: formData,
+          }
+        )
+          .then((response) => response.text())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       }
     </script>
   </body>
